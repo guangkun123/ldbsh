@@ -115,7 +115,7 @@ func (c *Context) put(key []byte, value []byte) error {
 	return c.db.Put(key, value, nil)
 }
 
-func (c *Context) del(key []byte, value []byte) error {
+func (c *Context) del(key []byte) error {
 	return c.db.Delete(key, nil)
 }
 
