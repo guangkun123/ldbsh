@@ -33,6 +33,7 @@ func NewContext(db *leveldb.DB) *Context {
 func (c *Context) NormalCommands() []*Command {
 	return []*Command{
 		{[]string{"get", "g"}, 1, c.handleGet, "Get key"},
+		{[]string{"del", "d"}, 2, c.handleDel, "Put key value"},
 		{[]string{"put", "p"}, 2, c.handlePut, "Put key value"},
 		{[]string{"list", "ls", "l"}, 0, c.handleListAll, "List all entires"},
 		{[]string{"list", "ls", "l"}, 1, c.handleListPrefix, "List entries with specified"},
@@ -114,6 +115,10 @@ func (c *Context) put(key []byte, value []byte) error {
 	return c.db.Put(key, value, nil)
 }
 
+func (c *Context) del(key []byte, value []byte) error {
+	return c.db.Delete(key, nil)
+}
+
 func (c *Context) list(ran *util.Range) error {
 	it := c.db.NewIterator(ran, nil)
 	var index uint64
@@ -183,6 +188,11 @@ func (c *Context) load(input io.Reader) error {
 func (c *Context) handleGet(params []string) error {
 	key := []byte(params[0])
 	return c.get(key)
+}
+
+func (c *Context) handleDel(params []string) error {
+	key := []byte(params[0])
+	return c.del(key)
 }
 
 func (c *Context) handlePut(params []string) error {
