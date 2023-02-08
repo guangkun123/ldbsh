@@ -33,7 +33,7 @@ func NewContext(db *leveldb.DB) *Context {
 func (c *Context) NormalCommands() []*Command {
 	return []*Command{
 		{[]string{"get", "g"}, 1, c.handleGet, "Get key"},
-		{[]string{"del", "d"}, 2, c.handleDel, "Put key value"},
+		{[]string{"del", "d"}, 1, c.handleDel, "Del key"},
 		{[]string{"put", "p"}, 2, c.handlePut, "Put key value"},
 		{[]string{"list", "ls", "l"}, 0, c.handleListAll, "List all entires"},
 		{[]string{"list", "ls", "l"}, 1, c.handleListPrefix, "List entries with specified"},
